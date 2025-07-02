@@ -13,45 +13,44 @@ const server = http.createServer(app);
 
 // Initialize socket.io server
 export const io = new Server(server, {
-    cors: {origin: "*"}
+  cors: { origin: "*" }
 });
 
 // Store Online users
 export const userSocketMap = {}; // { userId: socketId }
 
-// oskcet.io connection Handler
-io.on("connection", (socket)=>{
-    const userId = socket.handshake.query.userId;
-    console.log("User Connected", userId);
+io.on("connection", (socket) => {
+  const userId = socket.handshake.query.userId;
+  console.log("User Connected", userId);
 
-    if(userId) userSocketMap[userId] = socket.id;
+  if (userId) userSocketMap[userId] = socket.id;
 
-    // Emit Online Users to all connected clinets
+  io.emit("getOnlineUsers", Object.keys(userSocketMap));
+
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", userId);
+    delete userSocketMap[userId];
     io.emit("getOnlineUsers", Object.keys(userSocketMap));
+  });
+});
 
-    socket.on("disconnect", ()=>{
-        console.log("User Disconnected", userId);
-        delete userSocketMap[userId];
-        io.emit("getOnlineUsers", Object.keys(userSocketMap))
-    })
-})
-
-// Middleware Setup
-app.use(express.json({limit: "4mb"}));
+// Middleware
+app.use(express.json({ limit: "4mb" }));
 app.use(cors());
 
-// Routes setup
-app.use("/api/status", (req, res)=> res.send("Server is live"));
+// Routes
+app.use("/api/status", (req, res) => res.send("Server is live"));
 app.use("/api/auth", userRouter);
-app.use("/api/messages", messageRouter)
+app.use("/api/messages", messageRouter);
 
-// Connect to MongoDB
-await connectDB();
+// Start the server (ALWAYS)
+const startServer = async () => {
+  await connectDB();
 
-if(process.env.NODE_ENV !== "production"){
-    const PORT = process.env.PORT || 5000;
-    server.listen(PORT, ()=> console.log("Server is running on PORT:" + PORT));
-}
+  const PORT = process.env.PORT || 5000;
+  server.listen(PORT, () =>
+    console.log(`✅ Server is running on PORT: ${PORT}`)
+  );
+};
 
-// Export server for Vercel
-export default server;
+startServer();
