@@ -3,6 +3,8 @@ import assets, { messagesDummyData } from '../assets/assets'
 import { formatMessageTime } from '../lib/utils.js'
 import { ChatContext } from '../../context/ChatContext'
 import { AuthContext } from '../../context/AuthContext'
+import EmojiPicker from 'emoji-picker-react';
+
 
 const ChatContainer = () => {
   
@@ -10,8 +12,15 @@ const ChatContainer = () => {
     const { authUser, onlineUser } = useContext(AuthContext)
 
     const scrollEnd = useRef()
+    const emojiPickerRef = useRef(null);
 
     const [input, setInput] = useState('');
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+    // Handle emoji picker in chat
+    const handleEmojiClick = (emojiData) => {
+    setInput((prev) => prev + emojiData.emoji);
+    };
 
     // Handle sending a message
     const handleSendMessage = async (e)=>{
@@ -48,6 +57,20 @@ const ChatContainer = () => {
             scrollEnd.current.scrollIntoView({ behavior: "smooth" })
         }
     },[messages])
+
+    
+    useEffect(() => {
+    const handleClickOutside = (e) => {
+        if (emojiPickerRef.current && !emojiPickerRef.current.contains(e.target)) {
+        setShowEmojiPicker(false);
+        }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+    };
+    }, []);
   
     return selectedUser ? (
     <div className='h-full overflow-scroll relative backdrop-blur-lg'>
@@ -71,7 +94,7 @@ const ChatContainer = () => {
                         <img src={msg.image} alt=""className='max-w-[230px] border
                         border-gray-700 rounded-lg overflow-hidden mb-8'/>
                     ) : (
-                        <p className={`p-2 max-w-[200px] md:text-sm font-light
+                        <p className={`p-2 max-w-[200px] md:text-base font-light
                             rounded-lg mb-8 break-all bg-violet-500/30 text-white ${msg.senderId === authUser._id
                             ? 'rounded-br-none' : 'rounded-bl-none'}`}>{msg.text}</p>
                     )}
@@ -88,10 +111,26 @@ const ChatContainer = () => {
 
         {/*--- bottom area ---*/}
         <div className='absolute bottom-0 left-0 right-0 flex items-center gap-3 p-3'>
+
+            {/* Emoji Picker Dropdown */}
+            {showEmojiPicker && (
+                <div ref={emojiPickerRef} className="absolute bottom-14 left-3 z-50" onMouseLeave={() => setShowEmojiPicker(false)}>
+                    <EmojiPicker onEmojiClick={handleEmojiClick} theme='dark' emojiStyle="native" customEmojiSize={32} />
+                </div>
+            )}
+
             <div className='flex-1 flex items-center bg-gray-500 px-3 rounded-full'>
                 <input onChange={(e)=> setInput(e.target.value)} value={input} onKeyDown={(e)=>e.key === "Enter" ? handleSendMessage(e) : null} 
                 type="text" placeholder='Send a message' className='flex-1 text-sm p-3 border-none rounded-lg outline-none
                 text-white placeholder-white'/>
+
+                <img
+                src={assets.emoji_icon || "https://cdn-icons-png.flaticon.com/512/742/742751.png"} // fallback
+                alt="emoji"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                className='w-5 h-5 mr-2 cursor-pointer'
+                />
+
                 <input onChange={handleSendImage} type="file" id='image' accept='image/png, image/jpeg' hidden/>
                 <label htmlFor="image">
                     <img src={assets.gallery_icon} alt="" className='w-5 mr-2 cursor-pointer' />
