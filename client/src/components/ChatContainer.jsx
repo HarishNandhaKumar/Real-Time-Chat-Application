@@ -125,7 +125,7 @@ const ChatContainer = () => {
                 text-white placeholder-white'/>
 
                 <img
-                src={assets.emoji_icon || "https://cdn-icons-png.flaticon.com/512/742/742751.png"} // fallback
+                src={assets.emoji_icon}
                 alt="emoji"
                 onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                 className='w-5 h-5 mr-2 cursor-pointer'

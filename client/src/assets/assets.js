@@ -22,6 +22,7 @@ import pic4 from './pic4.png'
 import img1 from './img1.jpg'
 import img2 from './img2.jpg'
 import logo_new from './logo_new.png'
+import emoji_icon from './emoji_icon.png'
 
 const assets = {
     avatar_icon,
@@ -37,7 +38,8 @@ const assets = {
     code,
     bgImage,
     profile_martin,
-    logo_new
+    logo_new,
+    emoji_icon
 }
 
 export default assets;
