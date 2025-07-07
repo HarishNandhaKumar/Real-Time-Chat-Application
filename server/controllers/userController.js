@@ -2,6 +2,7 @@ import cloudinary from "../lib/cloudinary.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.js";
 import bcrypt from "bcryptjs";
+import Message from "../models/message.js"
 
 // Signup a new user
 export const signup = async (req, res)=>{
@@ -86,3 +87,33 @@ export const updateProfile = async (req, res)=>{
         res.json({success: false, message: error.message})
     }
 }
+
+// Controller to permanently delete the existing user and messages
+export const deleteUser = async (req, res) => {
+    try {
+        const userId = req.user._id;
+
+        // Fetch user to get profilePic info (if needed)
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+
+        // Optional: Delete profile picture from Cloudinary
+        if (user.profilePic) {
+            const publicId = user.profilePic.split("/").pop().split(".")[0]; // crude extract
+            await cloudinary.uploader.destroy(publicId).catch(() => {});
+        }
+
+        // Delete user's messages
+        await Message.deleteMany({ sender: userId });
+
+        // Delete the user
+        await User.findByIdAndDelete(userId);
+
+        res.json({ success: true, message: "User and their messages deleted successfully" });
+    } catch (error) {
+        console.error(error.message);
+        res.json({ success: false, message: error.message });
+    }
+};

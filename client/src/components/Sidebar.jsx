@@ -3,6 +3,9 @@ import assets from "../assets/assets"
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
 import { ChatContext } from '../../context/ChatContext'
+import { useDelete } from "../../context/DeleteContext";
+
+
 
 const Sidebar = () => {
     
@@ -10,6 +13,8 @@ const Sidebar = () => {
     unseenMessages, setUnseenMessages} = useContext(ChatContext)
 
   const {logout, onlineUser} = useContext(AuthContext)
+
+  const { handleDeleteClick, showConfirmDelete, setShowConfirmDelete, confirmDelete } = useDelete();
 
   const [input, setInput] = useState("")
     
@@ -32,6 +37,8 @@ const Sidebar = () => {
                 <div className='absolute top-full right-0 z-20 w-32 p-5 rounded-md
                 bg-[#282142]/60 backdrop-blur-md border border-gray-600 text-gray-100 hidden group-hover:block shadow-xl'>
                     <p className="cursor-pointer hover:text-sm" onClick={()=>navigate('/profile')}>Edit Profile</p>
+                    <hr className='my-2 border-t border-gray-500' />
+                    <p onClick={handleDeleteClick} className='cursor-pointer hover:text-sm text-gray-100'>Delete Account</p>
                     <hr className='my-2 border-t border-gray-500' />
                     <p onClick={()=> logout()} className='cursor-pointer hover:text-sm'>Logout</p>
                 </div>
@@ -64,6 +71,31 @@ const Sidebar = () => {
                 </div>
             ) )}
         </div>
+
+        {/* confirmation dialog */}
+        {showConfirmDelete && (
+          <div className="absolute inset-0 bg-black/20 backdrop-blur-xl z-50 flex justify-center items-center">
+            <div className="bg-[#282142] p-6 rounded-xl shadow-xl border border-gray-600 max-w-xs text-center">
+              <p className="text-white mb-4">Are you sure you want to delete your account?</p>
+              <div className="flex justify-center gap-4">
+                <button
+                  type="button"
+                  onClick={confirmDelete}
+                  className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-white text-sm"
+                >
+                  Yes, Delete
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmDelete(false)}
+                  className="bg-gray-400 hover:bg-gray-500 px-4 py-2 rounded text-white text-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
     </div>
   )
 }
