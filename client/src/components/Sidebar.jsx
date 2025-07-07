@@ -36,11 +36,17 @@ const Sidebar = () => {
                 <img src={assets.menu_icon} alt="logo" className='max-h-5 cursor-pointer' />
                 <div className='absolute top-full right-0 z-20 w-32 p-5 rounded-md
                 bg-[#282142]/60 backdrop-blur-md border border-gray-600 text-gray-100 hidden group-hover:block shadow-xl'>
-                    <p className="cursor-pointer hover:text-sm" onClick={()=>navigate('/profile')}>Edit Profile</p>
+
+                    <p className="cursor-pointer transition-transform transform hover:scale-100 hover:text-purple-500" 
+                    onClick={()=>navigate('/profile')}>Edit Profile</p>
                     <hr className='my-2 border-t border-gray-500' />
-                    <p onClick={handleDeleteClick} className='cursor-pointer hover:text-sm text-gray-100'>Delete Account</p>
+
+                    <p onClick={handleDeleteClick} className='cursor-pointer text-gray-100 transition-transform 
+                    transform hover:scale-100 hover:text-purple-500'>Delete Account</p>
                     <hr className='my-2 border-t border-gray-500' />
-                    <p onClick={()=> logout()} className='cursor-pointer hover:text-sm'>Logout</p>
+
+                    <p onClick={()=> logout()} className='cursor-pointer transition-transform transform hover:scale-100
+                     hover:text-purple-500'>Logout</p>
                 </div>
             </div>
           </div>  
@@ -54,8 +60,15 @@ const Sidebar = () => {
 
         <div className='flex flex-col gap-y-2'>
             {filteredUsers.map((user, index)=>(
-                <div onClick={()=>{setSelectedUser(user); setUnseenMessages(prev=>({...prev, [user._id]:0}))}} key={index} className={`relative flex items-center gap-2 p-2 pl-4 rounded-xl border border-gray-400
-                cursor-pointer max-sm:text-sm hover:bg-[#282142]/50 transition duration-150 ${selectedUser?._id === user._id ? 'bg-[#282142]/50' : 'bg-transparent'}`}>
+                <div onClick={()=>{
+                  if (selectedUser?._id === user._id) {
+                    setSelectedUser(null);
+                  } else {
+                    setSelectedUser(user);
+                    setUnseenMessages(prev => ({ ...prev, [user._id]: 0 }));
+                  }}} 
+                key={index} className={`relative flex items-center gap-2 p-2 pl-4 rounded-xl border border-gray-400 bg-violet-500/30
+                cursor-pointer max-sm:text-sm transition-transform transform hover:scale-100 hover:bg-violet-500 ${selectedUser?._id === user._id ? 'bg-[#282142]/50' : 'bg-transparent'}`}>
                     <img src={user?.profilePic || assets.avatar_icon} alt="" className='w-[35px] aspect-[1/1] rounded-full' />
                     <div className='flex flex-col leading-5'>
                         <p>{user.fullName}</p>

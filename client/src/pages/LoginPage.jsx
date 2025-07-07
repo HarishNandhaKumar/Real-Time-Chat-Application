@@ -29,7 +29,7 @@ const LoginPage = () => {
     justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl'>
         
         {/*--- left ---*/}
-        <img src={assets.logo_new} alt="" className='w-[min(30vw,400px)] ' />
+        <img src={assets.logo_new} alt="" className='w-[min(30vw,400px)] transition-transform duration-200 transform hover:scale-130' />
 
         {/*--- right ---*/}
         <form onSubmit={onSubmitHandler} className='border-2 bg-white/8 text-white border-gray-500 p-6 flex
@@ -72,7 +72,8 @@ const LoginPage = () => {
           }
 
           <button className='py-3 bg-gradient-to-r from-yellow-400
-          to-orange-600 text-white rounded-md cursor-pointer'>
+          to-orange-600 text-white rounded-md cursor-pointer transition-transform 
+          duration-200 transform hover:scale-110'>
             {currState === "Sign Up" ? "Create Account" : "Login Now"}
           </button>
 
