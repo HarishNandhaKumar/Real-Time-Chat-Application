@@ -26,13 +26,13 @@ const LoginPage = () => {
 
   return (
     <div className='min-h-screen bg-cover bg-center flex items-center
-    justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl'>
+    justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-md'>
         
         {/*--- left ---*/}
-        <img src={assets.logo_new} alt="" className='w-[min(30vw,400px)] ' />
+        <img src={assets.logo_new} alt="" className='w-[min(30vw,400px)] transition-transform duration-200 transform hover:scale-130' />
 
         {/*--- right ---*/}
-        <form onSubmit={onSubmitHandler} className='border-2 bg-white/8 text-white border-gray-500 p-6 flex
+        <form onSubmit={onSubmitHandler} className='border-2 bg-white/8 text-black border-blue-950 p-6 flex
         flex-col gap-6 rounded-lg shadow-lg'>
           <h2 className='font-medium text-2xl flex justify-between items-center'>
             {currState}
@@ -43,53 +43,55 @@ const LoginPage = () => {
 
           {currState === "Sign Up" && !isDataSubmitted && (
             <input onChange={(e)=>setFullName(e.target.value)} value={fullName}
-            type="text" className='p-2 border border-gray-500 rounded-md
-            focus:outline-none' placeholder='Full Name' required/>
+            type="text" className='bg-orange-50 p-2 border border-blue-950 rounded-md
+            focus:outline-none focus:ring-2 focus:ring-amber-500' placeholder='Full Name' required/>
           )}
 
           {!isDataSubmitted && (
             <>
               <input onChange={(e)=>setEmail(e.target.value)} value={email} 
-              type="email" placeholder='Email Address' required className='p-2
-              border border-gray-500 rounded-md focus:outline-none focus:ring-2
-              focus:ring-indigo-500' />
+              type="email" placeholder='Email Address' required className='bg-orange-50 p-2
+              border border-blue-950 rounded-md focus:outline-none focus:ring-2
+              focus:ring-amber-500' />
 
               <input onChange={(e)=>setPassword(e.target.value)} value={password} 
-              type="password" placeholder='Password' required className='p-2
-              border border-gray-500 rounded-md focus:outline-none focus:ring-2
-              focus:ring-indigo-500' />
+              type="password" placeholder='Password' required className='bg-orange-50 p-2
+              border border-blue-950 rounded-md focus:outline-none focus:ring-2
+              focus:ring-amber-500' />
             </>
           )}
 
           {
             currState === "Sign Up" && isDataSubmitted && (
               <textarea onChange={(e)=>setBio(e.target.value)} value={bio}
-              rows={4} className='p-2 border border-gray-500 rounded-md
-              focus:outline-none focus:ring-2 focus:ring-indigo-500'
+              rows={4} className='bg-orange-50 p-2 border border-gray-500 rounded-md
+              focus:outline-none focus:ring-2 focus:ring-amber-500'
               placeholder='write a short bio here...' required>
               </textarea>
             )
           }
 
           <button className='py-3 bg-gradient-to-r from-yellow-400
-          to-orange-600 text-white rounded-md cursor-pointer'>
+          to-orange-600 text-black border-2 rounded-md cursor-pointer transition-transform 
+          duration-200 transform hover:scale-110 hover:bg-white hover:from-white hover:to-orange-50
+         hover:text-black'>
             {currState === "Sign Up" ? "Create Account" : "Login Now"}
           </button>
 
-          <div className='flex items-center gap-2 text-sm text-white'>
+          <div className='flex items-center gap-2 text-sm text-black'>
             <input type="checkbox" />
             <p>Agree to the terms of use & privacy policy</p>
           </div>
 
           <div className='flex flex-col gap-2'>
             {currState === "Sign Up" ? (
-              <p className='text-sm text-white'>Already have an account? 
+              <p className='text-sm text-black'>Already have an account ? 
               <span onClick={()=>{setCurrState("Login"); setIsDataSubmitted(false)}} 
-              className='font-medium text-yellow-400 cursor-pointer'> Login here</span></p>
+              className='font-bold text-red-600 cursor-pointer px-2'>  Login here</span></p>
             ) : (
-              <p className='text-sm text-white'>Create an account 
+              <p className='text-sm text-black'>Create an account ?
               <span onClick={()=>setCurrState("Sign Up")}
-              className='font-medium text-yellow-400 cursor-pointer'> Click here</span></p>
+              className='font-bold text-red-600 cursor-pointer px-2'> Click here</span></p>
             )}
           </div>
 
