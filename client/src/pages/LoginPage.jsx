@@ -71,8 +71,9 @@ const LoginPage = () => {
             )
           }
 
-          <button className='py-3 bg-gradient-to-r from-yellow-400
-          to-orange-600 text-white rounded-md cursor-pointer'>
+          <button className='transition-transform duration-200 hover:scale-110
+          bg-gradient-to-r from-yellow-400 to-orange-600 text-black font-bold border-2 text-md py-1 px-20 
+          rounded-full cursor-pointer hover:bg-white hover:from-white hover:to-orange-50 hover:text-black'>
             {currState === "Sign Up" ? "Create Account" : "Login Now"}
           </button>
 
