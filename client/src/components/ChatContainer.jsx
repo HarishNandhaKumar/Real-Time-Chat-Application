@@ -129,10 +129,9 @@ const ChatContainer = () => {
                         <img src={msg.image} alt=""className='max-w-[230px] border
                         border-gray-700 rounded-lg overflow-hidden mb-8'/>
                     ) : (
-                        <p className={`p-2 max-w-[300px] md:text-base font-light
-                            rounded-lg mb-8 break-all bg-cyan-900 text-white 
-                            transition-transform transform hover:scale-105 hover:bg-yellow-500
-                            ${msg.senderId === authUser._id ? 'rounded-br-none' : 'rounded-bl-none'}`}>{msg.text}</p>
+                        <p className={`p-2 max-w-[200px] md:text-base font-light
+                            rounded-lg mb-8 break-all bg-violet-500/30 text-white ${msg.senderId === authUser._id
+                            ? 'rounded-br-none' : 'rounded-bl-none'}`}>{msg.text}</p>
                     )}
                     <div className='text-center text-xs'>
                         <img src={msg.senderId === authUser._id ? authUser?.
@@ -155,7 +154,7 @@ const ChatContainer = () => {
                 </div>
             )}
 
-            <div className='flex-1 flex items-center bg-gradient-to-r from-cyan-900 to-blue-950 px-3 rounded-full gap-2'>
+            <div className='flex-1 flex items-center bg-gray-500 px-3 rounded-full'>
                 <input onChange={(e)=> setInput(e.target.value)} value={input} onKeyDown={(e)=>e.key === "Enter" ? handleSendMessage(e) : null} 
                 type="text" placeholder='Send a message' className='flex-1 text-sm p-3 border-none rounded-lg outline-none
                 text-white placeholder-white'/>
@@ -180,10 +179,8 @@ const ChatContainer = () => {
   ) : (
     <div className='flex flex-col items-center justify-center gap-2 text-gray-500
     bg-white/10 max-md:hidden'>
-        <img src={assets.logo_new} className='w-[min(30vw,300px)] transition-transform 
-          duration-200 transform hover:scale-120' alt="" />
-        <p className='text-lg font-medium text-black transition-transform 
-          duration-200 transform hover:scale-110 '>Stay Close. Instantly.</p>
+        <img src={assets.logo_new} className='w-[min(30vw,300px)]' alt="" />
+        <p className='text-lg font-medium text-white'>Chat Anytime, anywhere</p>
     </div>
   )
 }
