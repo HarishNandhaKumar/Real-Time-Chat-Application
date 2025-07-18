@@ -51,7 +51,7 @@ const ChatContainer = () => {
         });
 
         setLoadingImage(false); // Remove shimmer after delay
-        }, 5000);
+        }, 1000);
 
         const reader = new FileReader();
         reader.onloadend = async ()=>{
@@ -88,13 +88,20 @@ const ChatContainer = () => {
         document.removeEventListener("mousedown", handleClickOutside);
     };
     }, []);
+
+
+    useEffect(() => {
+    if (loadingImage && scrollEnd.current) {
+        scrollEnd.current.scrollIntoView({ behavior: "smooth" });
+    }
+    }, [loadingImage]);
   
     return selectedUser ? (
     <div className='h-full overflow-scroll relative backdrop-blur-lg'>
         {/* --- header --- */}
         <div className='flex items-center gap-3 py-3 mx-4 border-b border-stone-500'>
             <img src={selectedUser.profilePic || assets.avatar_icon} alt="" className='w-8 rounded-full' />
-            <p className='flex-1 text-lg text-black font-bold flex items-center gap-2'>
+            <p className='text-lg text-white font-bold bg-gradient-to-r from-cyan-900 to-blue-950 px-4 py-1 rounded-full inline-flex items-center gap-2'>
                 {selectedUser.fullName}
                 {onlineUser.includes(selectedUser._id) && (
                     <span className='w-2 h-2 rounded-full bg-green-500'></span>
@@ -106,31 +113,14 @@ const ChatContainer = () => {
         {/*--- chat area ---*/}
         <div className='flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6'>
 
-            {loadingImage && (
-            <div className="flex items-end gap-2 justify-end mb-8">
-                <div className="w-[230px] h-[140px] rounded-lg border border-gray-700 
-                bg-[length:400%_100%] animate-shimmer 
-                bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700">
-                </div>
-                <div className='text-center text-xs'>
-                <img
-                    src={authUser?.profilePic || assets.avatar_icon}
-                    alt=""
-                    className='w-7 rounded-full'
-                />
-                <p className='text-black'>Sending...</p>
-                </div>
-            </div>
-            )}
-
             {messages.map((msg, index)=>(
                 <div key={index} className={`flex items-end gap-2 justify-end ${msg.senderId !== authUser._id && 'flex-row-reverse'}`}>
                     {msg.image ? (
                         <img src={msg.image} alt=""className='max-w-[230px] border
                         border-gray-700 rounded-lg overflow-hidden mb-8'/>
                     ) : (
-                        <p className={`p-2 max-w-[200px] md:text-base font-light
-                            rounded-lg mb-8 break-all bg-violet-500/30 text-white ${msg.senderId === authUser._id
+                        <p className={`p-2 max-w-[200px] md:text-base font-light cursor-pointer transition-transform duration-200 transform hover:scale-110
+                            rounded-lg mb-8 break-all bg-gradient-to-r from-cyan-900 to-blue-950 text-white ${msg.senderId === authUser._id
                             ? 'rounded-br-none' : 'rounded-bl-none'}`}>{msg.text}</p>
                     )}
                     <div className='text-center text-xs'>
@@ -141,6 +131,35 @@ const ChatContainer = () => {
                     </div>
                 </div>
             ))}
+
+            {loadingImage && (
+            <div className="flex items-end gap-2 justify-end mb-8">
+                {/* Fancy animated image shimmer with floating loader */}
+                <div className="relative w-[230px] h-[140px] rounded-xl border border-gray-600 overflow-hidden shadow-lg bg-gray-900">
+                {/* Floating animated blobs */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-900 via-cyan-950 to-blue-950 animate-pulse opacity-70"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="relative">
+                    {/* Outer pulsating ring */}
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75 animate-ping"></span>
+                    {/* Central glowing dot */}
+                    <span className="relative inline-flex rounded-full h-6 w-6 bg-orange-400 animate-bounce shadow-lg"></span>
+                    </div>
+                </div>
+                </div>
+
+                {/* Profile + sending label */}
+                <div className="text-center text-xs">
+                <img
+                    src={authUser?.profilePic || assets.avatar_icon}
+                    alt="Sending"
+                    className="w-7 rounded-full"
+                />
+                <p className="text-white font-semibold animate-pulse">Sending...</p>
+                </div>
+            </div>
+            )}
+
             <div ref={scrollEnd}></div>
         </div>
 
@@ -154,7 +173,7 @@ const ChatContainer = () => {
                 </div>
             )}
 
-            <div className='flex-1 flex items-center bg-gray-500 px-3 rounded-full'>
+            <div className='flex-1 flex items-center bg-gradient-to-r from-cyan-900 to-blue-950 px-3 rounded-full'>
                 <input onChange={(e)=> setInput(e.target.value)} value={input} onKeyDown={(e)=>e.key === "Enter" ? handleSendMessage(e) : null} 
                 type="text" placeholder='Send a message' className='flex-1 text-sm p-3 border-none rounded-lg outline-none
                 text-white placeholder-white'/>
@@ -166,7 +185,7 @@ const ChatContainer = () => {
                 className='w-5 h-5 mr-2 cursor-pointer transition-transform duration-200 transform hover:scale-130'
                 />
 
-                <input onChange={handleSendImage} type="file" id='image' accept='image/png, image/jpeg' hidden/>
+                <input onChange={handleSendImage} type="file" id='image' accept='image/png, image/jpeg, image/gif' hidden/>
                 <label htmlFor="image">
                     <img src={assets.gallery_icon} alt="" className='w-5 mr-2 cursor-pointer transition-transform duration-200 
                     transform hover:scale-130' />

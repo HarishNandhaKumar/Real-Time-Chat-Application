@@ -43,8 +43,8 @@ const ProfilePage = () => {
             <input onChange={(e)=>setSelectedImg(e.target.files[0])} type="file" 
             id='avatar' accept='.png, .jpg, .jpeg, .gif' hidden/>
             <img src={selectedImg ? URL.createObjectURL(selectedImg) : assets.avatar_icon} alt="" 
-            className={`w-12 h-12 ${selectedImg && 'rounded-full'}`}/>
-            Upload profile image
+            className={`w-12 h-12 cursor-pointer transition-transform duration-200 transform hover:scale-110 ${selectedImg && 'rounded-full'}`}/>
+            Click Icon to upload new profile image
           </label>
           <input onChange={(e)=>setName(e.target.value)} value={name}
           type="text" required placeholder='Your Name' className='p-2 bg-orange-50 border

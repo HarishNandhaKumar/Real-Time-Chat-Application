@@ -22,13 +22,13 @@ const RightSidebar = () => {
         <div className='pt-10 flex flex-col items-center gap-2 text-xs
         font-light mx-auto'>
             <img src={selectedUser?.profilePic || assets.avatar_icon} alt=""
-            className='w-25 aspect-[1/1] rounded-full border-cyan-950 border-2' />
-            <h1 className='px-10 text-xl font-medium mx-auto flex items-center
-            gap-2'>
+            className='w-25 aspect-[1/1] rounded-full border-cyan-950 border-2 transition-transform duration-200 transform hover:scale-110' />
+            <h1 className='px-10 text-xl text-white font-medium mx-auto flex items-center
+            gap-2 bg-gradient-to-r from-cyan-900 to-blue-950 rounded-full'>
                 {onlineUser.includes(selectedUser._id) && <p className='w-2 h-2 rounded-full bg-green-500'></p>}
                 {selectedUser.fullName}
             </h1>
-            <p className='font-bold px-10 mx-auto'>{selectedUser.bio}</p>
+            <p className='text-white font-bold px-10 mx-auto bg-gradient-to-r from-cyan-900/50 to-blue-950/50 rounded-full inline-flex'>{selectedUser.bio}</p>
         </div>
 
         <hr className='border-[#ffffff50] my-4' />
