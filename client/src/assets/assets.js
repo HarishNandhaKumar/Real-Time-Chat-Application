@@ -1,6 +1,6 @@
 import avatar_icon from './avatar_icon.png'
 import gallery_icon from './gallery_icon.png'
-import help_icon from './help_icon.png'
+import verified_icon from './verified_icon.png'
 import logo_icon from './logo_icon.svg'
 import logo_big from './logo_big.svg'
 import logo from './logo.png'
@@ -27,7 +27,7 @@ import emoji_icon from './emoji_icon.png'
 const assets = {
     avatar_icon,
     gallery_icon,
-    help_icon,
+    verified_icon,
     logo_big,
     logo_icon,
     logo,

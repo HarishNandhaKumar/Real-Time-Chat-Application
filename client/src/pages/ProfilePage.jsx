@@ -62,7 +62,7 @@ const ProfilePage = () => {
           >Update</button>
         </form>
         <img className={`max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10 transition-transform transform hover:scale-120
-          ${selectedImg && 'rounded-full'}`} src={authUser?.profilePic || assets.logo_icon} alt="" />
+          ${selectedImg && 'rounded-full'}`} src={authUser?.profilePic || assets.avatar_icon} alt="" />
       </div>
         
     </div>

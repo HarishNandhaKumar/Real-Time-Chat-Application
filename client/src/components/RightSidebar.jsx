@@ -34,7 +34,7 @@ const RightSidebar = () => {
         <hr className='border-[#ffffff50] my-4' />
 
         <div className='px-5 text-sm font-bold'>
-            <p>Media</p>
+            <p className='text-white px-5 mx-auto bg-gradient-to-r from-yellow-400 to-orange-600 rounded-full inline-flex'>Media</p>
             <div className='mt-2 max-h-[200px] overflow-y-scroll grid grid-cols-2
             gap-4 opacity-80'>
                 {msgImages.map((url, index)=>(

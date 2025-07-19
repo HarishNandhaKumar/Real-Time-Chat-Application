@@ -108,7 +108,7 @@ const ChatContainer = () => {
                 )}
             </p>
             <img onClick={()=> setSelectedUser(null)}src={assets.arrow_icon} alt="" className='md:hidden max-w-7'/>
-            <img src={assets.help_icon} alt="" className='max-md:hidden max-w-5' />
+            <img src={assets.verified_icon} alt="" className='max-md:hidden max-w-5' />
         </div>
         {/*--- chat area ---*/}
         <div className='flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6'>
@@ -178,28 +178,29 @@ const ChatContainer = () => {
                 type="text" placeholder='Send a message' className='flex-1 text-sm p-3 border-none rounded-lg outline-none
                 text-white placeholder-white'/>
 
-                <img
-                src={assets.emoji_icon}
-                alt="emoji"
-                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                className='w-5 h-5 mr-2 cursor-pointer transition-transform duration-200 transform hover:scale-130'
-                />
+                <div className="flex items-center gap-2">
+                    <img src={assets.emoji_icon} alt="emoji" onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                    className='w-6 h-6 mr-2 cursor-pointer transition-transform duration-200 transform hover:scale-130'/>
+                    <input onChange={handleSendImage} type="file" id='image' accept='image/png, image/jpeg, image/gif' hidden/>
+                    <label htmlFor="image">
+                        <img src={assets.gallery_icon} alt="" className='w-6 h-6 mr-2 cursor-pointer transition-transform duration-200 
+                        transform hover:scale-130' />
+                    </label>
+                </div>
 
-                <input onChange={handleSendImage} type="file" id='image' accept='image/png, image/jpeg, image/gif' hidden/>
-                <label htmlFor="image">
-                    <img src={assets.gallery_icon} alt="" className='w-5 mr-2 cursor-pointer transition-transform duration-200 
-                    transform hover:scale-130' />
-                </label>
             </div>
-            <img onClick={handleSendMessage} src={assets.send_button} alt="" className='w-7 cursor-pointer 
+            <img onClick={handleSendMessage} src={assets.send_button} alt="" className='w-8 h-8 cursor-pointer 
             transition-transform duration-200 transform hover:scale-130' />
         </div>
     </div>
   ) : (
     <div className='flex flex-col items-center justify-center gap-2 text-gray-500
     bg-white/10 max-md:hidden'>
-        <img src={assets.logo_new} className='w-[min(30vw,300px)]' alt="" />
-        <p className='text-lg font-medium text-white'>Chat Anytime, anywhere</p>
+        <img src={assets.logo_new} className='w-[min(30vw,300px)] cursor-pointer 
+        transition-transform duration-200 transform hover:scale-115' alt="" />
+        <p className='text-lg font-medium text-white bg-gradient-to-r from-cyan-900 to-blue-950 px-3 rounded-full'>
+        Chat Anytime, anywhere
+        </p>
     </div>
   )
 }
