@@ -173,7 +173,7 @@ const ChatContainer = () => {
                 </div>
             )}
 
-            <div className='flex-1 flex items-center bg-gradient-to-r from-cyan-900 to-blue-950 px-3 rounded-full'>
+            <div className='flex-1 flex items-center bg-gradient-to-r from-cyan-900 to-blue-950 px-3 rounded-full border-0 bo'>
                 <input onChange={(e)=> setInput(e.target.value)} value={input} onKeyDown={(e)=>e.key === "Enter" ? handleSendMessage(e) : null} 
                 type="text" placeholder='Send a message' className='flex-1 text-sm p-3 border-none rounded-lg outline-none
                 text-white placeholder-white'/>
@@ -189,7 +189,7 @@ const ChatContainer = () => {
                 </div>
 
             </div>
-            <img onClick={handleSendMessage} src={assets.send_button} alt="" className='w-8 h-8 cursor-pointer 
+            <img onClick={handleSendMessage} src={assets.send_button} alt="" className='w-8 h-8 border-2 border-white rounded-full cursor-pointer 
             transition-transform duration-200 transform hover:scale-130' />
         </div>
     </div>

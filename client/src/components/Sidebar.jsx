@@ -35,7 +35,7 @@ const Sidebar = () => {
             <div className='relative py-2 group'>
                 <img src={assets.menu_icon} alt="logo" className='max-h-5 cursor-pointer' />
                 <div className='absolute top-full right-0 z-20 w-32 p-5 rounded-md
-                bg-gradient-to-r from-cyan-900/70 to-blue-950/70 backdrop-blur-md border border-gray-600 text-gray-100 hidden group-hover:block shadow-xl'>
+                bg-gradient-to-r from-cyan-900/70 to-blue-950/70 backdrop-blur-md border border-white text-gray-100 hidden group-hover:block shadow-xl'>
                     <p className="cursor-pointer hover:text-orange-400" onClick={()=>navigate('/profile')}>Edit Profile</p>
                     <hr className='my-2 border-t border-gray-500' />
                     <p onClick={handleDeleteClick} className='cursor-pointer hover:text-orange-400'>Delete Account</p>
@@ -63,16 +63,16 @@ const Sidebar = () => {
                   }
                 }} 
                 
-                key={index} className={`relative flex items-center gap-2 p-2 pl-4 rounded-xl border border-gray-400 
+                key={index} className={`relative flex items-center gap-2 p-2 pl-4 rounded-xl border-2 border-white
                 cursor-pointer transition-transform duration-200 transform hover:scale-105 max-sm:text-sm hover:bg-[#282142]/50 
-                ${selectedUser?._id === user._id ? 'bg-orange-900/70' : 'bg-gradient-to-r from-cyan-900 to-blue-950'}`}>
+                ${selectedUser?._id === user._id ? 'bg-orange-900/70' : 'bg-gradient-to-r from-yellow-400 to-orange-600'}`}>
                     <img src={user?.profilePic || assets.avatar_icon} alt="" className='w-[35px] aspect-[1/1] rounded-full' />
                     <div className='flex flex-col leading-5 '>
-                        <p className='text-white'>{user.fullName}</p>
+                        <p className='text-black font-semibold mx-1'>{user.fullName}</p>
                         {
                             onlineUser?.includes(user._id)
-                            ? <span className='text-green-400 text-xs'>Online</span>
-                            : <span className='text-red-400 text-xs'>Offline</span>
+                            ? <span className='text-green-500 text-xs bg-white/80 rounded-full px-2 my-0.5 mx-auto inline-flex'>Online</span>
+                            : <span className='text-red-500 text-xs bg-white/80 rounded-full px-2 my-0.5 mx-auto inline-flex'>Offline</span>
                         }
                     </div>
                     {unseenMessages[user._id] > 0 && <p className='absolute top-4 right-4 text-xs h-5 w-5
