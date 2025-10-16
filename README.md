@@ -505,9 +505,7 @@ if (!isMatch) {
 ## 🌐 Live Demo
 
 ### 🔗 Application Links
-- **Frontend:** [https://your-chat-app.vercel.app](https://your-chat-app.vercel.app)
-- **API:** [https://your-api.onrender.com](https://your-api.onrender.com)
-- **API Health:** [https://your-api.onrender.com/api/health](https://your-api.onrender.com/api/health)
+- **Web App Link:** https://instachat-web.vercel.app/
 
 ### 🧪 Test Accounts
 ```
